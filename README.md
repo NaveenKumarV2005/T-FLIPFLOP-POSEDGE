@@ -26,45 +26,51 @@ Here, Qtt & Qt+1t+1 are present state & next state respectively. So, T flip-flop
  
 From the above characteristic table, we can directly write the next state equation as Q(t+1)=T′Q(t)+TQ(t)′ ⇒Q(t+1)=T⊕Q(t)
 
-**Procedure**
+# Procedure
+### 1.Define Module: Define a Verilog module for the T flip-flop with inputs (T, CLK) and outputs (Q, Q_bar).
 
-/* write all the steps invloved */
+### 2.Declare Inputs and Outputs: Declare input and output ports for the module.
 
-~~~
-1.Initialize the shift register to a known state (e.g., all zeros).
+### 3.Implement Flip-Flop Logic: Write Verilog code to implement the T flip-flop logic based on its functional table. Use a synchronous always @(posedge CLK) block to trigger the flip-flop on the positive edge of the clock signal.
 
-2.Input a bit serially into the shift register.
+### 4.Simulate Using Testbench: Write a Verilog testbench to simulate the behavior of the T flip-flop under different input conditions.
 
-3.Shift the contents of the register one position to the right (or left).
+### 5.Apply Input Stimuli: In the testbench, apply various combinations of input stimuli (T, CLK) to cover all possible input states.
 
-4.Output the shifted bit from the last stage of the register.
+### 6.Verify Output Behavior: Verify that the output behavior of the T flip-flop matches the expected behavior defined by its functional table.
 
-5.Repeat steps 2-4 for each bit you want to input and shift.
-~~~
+### 7.Check for Race Conditions: Ensure that there are no race conditions or undefined states in the design by analyzing the timing and sequence of input changes.
 
-**PROGRAM**
 
-/* Program for flipflops and verify its truth table in quartus using Verilog programming. Developed by:Naveen Kumar V RegisterNumber:212223220068
+# PROGRAM
+```
+/* Program for flipflops and verify its truth table in quartus using Verilog programming.
+Developed by: NAVEEN KUMAR V
+RegisterNumber: 212223220068
 */
-~~~
-module exp11(out,clk,rstn);
-input clk,rstn;
-output reg [3:0]out;
-always @ (posedge clk)
+module TFLIPFLOPPOSEDGE( input clk, rst_n, input t,
+output reg q,
+output q_bar
+);
+always@(posedge clk) 
+begin // for synchronous reset
+  //WRITE THE CONDITION OF TOGGLE FLIPFLOP HERE WITH RESET AND 
+  //IMPLEMENT THE T LOGIC BY CONDITIONAL OPERATOR
+if(!rst_n)
+q<=0;
+else 
 begin
-   if(!rstn)
-     out<=0;
-   else 
-     out <= out+1;
+q<=(t?~q:q);
 end
+end
+assign q_bar = ~q;
 endmodule
-~~~
-**RTL LOGIC FOR FLIPFLOPS**
-![image](https://github.com/04Varsha/T-FLIPFLOP-POSEDGE/assets/149035374/c1849f12-d68d-46e4-b35f-c16112bcd7d7)
+```
+# RTL LOGIC FOR FLIPFLOPS
+![image](https://github.com/23004426/T-FLIPFLOP-POSEDGE/assets/144979327/7c638fb3-598e-46f7-86ec-d5f82cc3f003)
 
-**TIMING DIGRAMS FOR FLIP FLOPS**
-![326663577-fdaadbde-54aa-4ef3-99fc-4c55a9739c6e](https://github.com/04Varsha/T-FLIPFLOP-POSEDGE/assets/149035374/d86b20de-a125-43fc-b4c7-58582813abcf)
+# TIMING DIGRAMS FOR FLIP FLOPS
+![image](https://github.com/23004426/T-FLIPFLOP-POSEDGE/assets/144979327/3b4129b3-4284-471a-957a-2ec1d95c46f2)
 
-**RESULTS**
-Thus the program executed successfully.
-
+# RESULTS
+Thus the T flipflop using verilog and validating their functionality using their functional tables is implemented and executed successfully.
